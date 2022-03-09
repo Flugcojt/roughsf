@@ -49,6 +49,7 @@ The following attributes are supported for LINESTRINGS:
 
 -   *color* stroke color
 -   *stroke* stroke size
+-   *preserveVertices* - defaults to TRUE - more consistent lines
 
 The following attributes are supported for POINTS:
 
