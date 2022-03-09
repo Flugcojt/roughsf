@@ -189,6 +189,7 @@ prepare_polygon <- function(object,coords){
     fillweight = object[["fillweight"]],
     hachureangle = object[["hachureangle"]],
     hachuregap = object[["hachuregap"]],
+    preserveVertices = FALSE,
     label="",
     pos="")
 }
@@ -200,6 +201,10 @@ prepare_linestring <- function(object,coords){
 
   if(!"stroke" %in% names(object)){
     object[["stroke"]] <- 1
+  }
+
+  if(!"preserveVertices" %in% names(object)){
+    object[["preserveVertices"]] <- TRUE
   }
 
   nobj <- nrow(object)#max(coords[,4])
@@ -223,6 +228,7 @@ prepare_linestring <- function(object,coords){
     fillweight = "",
     hachureangle = NA,
     hachuregap = NA,
+    preserveVertices = object[["preserveVertices"]],
     label="",
     pos="")
 }
@@ -256,6 +262,7 @@ prepare_points <- function(object,coords){
     fillweight = "",
     hachureangle = NA,
     hachuregap = NA,
+    preserveVertices = FALSE,
     label=object[["label"]],
     pos=object[["label_pos"]])
 }

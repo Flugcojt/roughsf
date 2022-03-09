@@ -18,7 +18,8 @@ function drawLine(rc, s) {
      roughness: s.roughness,
      bowing: s.bowing,
      stroke: s.color,
-     strokeWidth: s.size
+     strokeWidth: s.size,
+     preserveVertices: s.preserveVertices
    });
 }
 
