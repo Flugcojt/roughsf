@@ -95,14 +95,14 @@ roughsf <- function(layers,
 
   if(!is.null(title)){
     title_df <- data.frame(xy="",x=width/2,y=50,shape="TITLE",color="black",
-                           fill="",fillstyle="", hachureangle = NA, hachuregap = NA,
+                           fill="",fillstyle="", hachureangle = NA, hachuregap = NA,preserveVertices = FALSE,
                            size=NA,fillweight="",label=title,pos="c")
     rough_df <- rbind(rough_df,title_df)
   }
 
   if(!is.null(caption)){
     caption_df <- data.frame(xy="",x=width/2,y=height*.95,shape="CAPTION",color="black",
-                           fill="",fillstyle="", hachureangle = NA, hachuregap = NA,
+                           fill="",fillstyle="", hachureangle = NA, hachuregap = NA,preserveVertices = FALSE,
                            size=NA,fillweight="",label=caption,pos="c")
     rough_df <- rbind(rough_df,caption_df)
   }
