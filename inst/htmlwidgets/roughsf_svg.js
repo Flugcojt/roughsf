@@ -70,6 +70,24 @@ function drawLine(svg, rc, s) {
    }));
 }
 
+function drawPoint(svg, rc, s) {
+   svg.appendChild(rc.circle(Number(s.x), Number(s.y), Number(s.size), {
+     roughness: s.roughness,
+     bowing: s.bowing,
+     fill: s.fill,
+     fillStyle: "solid",
+     hachureGap: 4,
+     fillWeight: 1,
+     stroke: s.color,
+     strokeWidth: 1
+   }));
+
+  // if(s.label!==""){
+  //  drawText(rc,ctx,s)
+  // }
+
+}
+
 HTMLWidgets.widget({
 
   name: 'roughsf_svg',
