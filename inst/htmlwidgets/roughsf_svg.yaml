@@ -1,0 +1,6 @@
+dependencies:
+  - name: roughjs_svg
+    version: 3.1.0
+    src: htmlwidgets/lib/rough
+    script:
+      - rough.js
