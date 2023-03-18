@@ -44,7 +44,7 @@ roughsf <- function(layers,
                     font = "30px Arial",
                     title = NULL, title_font = "30px Arial",
                     caption = NULL, caption_font="30px Arial",
-                    width = NULL, height = NULL, elementId = NULL,chunk_name = "canvas") {
+                    width = NULL, height = NULL, elementId = NULL,chunk_name = "canvas", text_color = "gray") {
 
   if("sf"%in%class(layers)){
     layers <- list(layers)
@@ -94,14 +94,14 @@ roughsf <- function(layers,
   rough_df <- do.call("rbind",rough_lst)
 
   if(!is.null(title)){
-    title_df <- data.frame(xy="",x=width/2,y=50,shape="TITLE",color="black",
+    title_df <- data.frame(xy="",x=width/2,y=50,shape="TITLE",color=text_color,
                            fill="",fillstyle="", hachureangle = NA, hachuregap = NA,preserveVertices = FALSE,
                            size=NA,fillweight="",label=title,pos="c")
     rough_df <- rbind(rough_df,title_df)
   }
 
   if(!is.null(caption)){
-    caption_df <- data.frame(xy="",x=width/2,y=height*.95,shape="CAPTION",color="black",
+    caption_df <- data.frame(xy="",x=width/2,y=height*.95,shape="CAPTION",color=text_color,
                            fill="",fillstyle="", hachureangle = NA, hachuregap = NA,preserveVertices = FALSE,
                            size=NA,fillweight="",label=caption,pos="c")
     rough_df <- rbind(rough_df,caption_df)
@@ -125,7 +125,8 @@ roughsf <- function(layers,
     width = width,
     height = height,
     package = 'roughsf',
-    elementId = elementId
+    elementId = elementId,
+    sizingPolicy = htmlwidgets::sizingPolicy(fill = FALSE)
   )
 }
 
@@ -166,17 +167,34 @@ prepare_polygon <- function(object,coords){
   if(!"hachuregap" %in% names(object)){
     object[["hachuregap"]] <- 4*object[["stroke"]]
   }
+  if(!"fixPoly" %in% names(object)){
+    object[["fixPoly"]] <- F
+  }
 
   nobj <- nrow(object)#max(coords[,4])
   mobj <- 4
   path_string <- rep("",nobj)
   coords_obj <- split(coords[,1:2],coords[,mobj])
+  # coords_obj <- sf::st_coordinates(coords_obj,)
+  # xd <<- sf::st_centroid(coords_obj) %>%  print()
 
   for(i in 1:nobj){
     xy <- matrix(coords_obj[[i]],ncol=2)
+
+    if(object[["fixPoly"]]) {
+      xytsp <- TSP::ETSP(data.frame(xy))
+      colnames(xytsp) <- c("x", "y")
+      xytour <- TSP::solve_TSP(xytsp)
+      xy <- xy[xytour, ]
+    }
+
+
+
     path_string[i] <- paste0("M ",paste0(apply(xy,1,paste0,collapse=" "),collapse=" L "))
     path_string[i] <- paste0(path_string[i]," z")
   }
+
+  p <- path_string
   data.frame(
     xy  = path_string,
     x = NA,
