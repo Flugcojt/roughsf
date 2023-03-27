@@ -126,7 +126,7 @@ roughsf <- function(layers,
     height = height,
     package = 'roughsf',
     elementId = elementId,
-    sizingPolicy = htmlwidgets::sizingPolicy(fill = FALSE)
+    sizingPolicy = htmlwidgets::sizingPolicy()
   )
 }
 
