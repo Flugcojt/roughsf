@@ -11,6 +11,6 @@ save_roughsf <- function(rsf,file,background = "white",wait = 4){
   tfile <- tempfile(fileext = ".html")
   format <- substr(file,nchar(file)-2,nchar(file))
   htmlwidgets::saveWidget(rsf, file = tfile,background = background,selfcontained = TRUE)
-  suppressMessages(pagedown::chrome_print(tfile,output=file,format=format,selector = "canvas#canvas",wait=wait))
+  suppressMessages(pagedown::chrome_print(normalizePath(tfile),output=normalizePath(file),format=format,selector = "canvas#canvas",wait=wait))
   suppressMessages(file.remove(tfile))
 }
